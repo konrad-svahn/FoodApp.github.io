@@ -24,7 +24,6 @@ app.get("/", (req, res) => {
 });
 
 
-const MONGODB_URL = "mongodb+srv://Kajal:bsSFeT9tpKALStYo@cluster0.zhcqekz.mongodb.net/food-app?retryWrites=true&w=majority"
 
 const port = 5001;
 
@@ -66,7 +65,3 @@ mongoose.connect(MONGODB_URL)
       .catch((error) => console.log(`${error} did not connect`));
  
 
-
-      //mongodb+srv://Kajal:<password>@cluster0.zhcqekz.mongodb.net/?retryWrites=true&w=majority
-// bsSFeT9tpKALStYo
-// mongodb+srv://Kajal:<password>@cluster0.zhcqekz.mongodb.net/?retryWrites=true&w=majority
