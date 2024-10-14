@@ -35,6 +35,7 @@ export const deleteTour = (id) => API.delete(`/tour/${id}`);
 export const updateTour = (updatedTourData, id) =>
   API.patch(`/tour/${id}`, updatedTourData);
 export const getToursByUser = (userId) => API.get(`/tour/userTours/${userId}`);
+export const getLikedTours = (userId) => API.get(`/tour/likedTours/${userId}`);
 
 export const getToursBySearch = (searchQuery) =>
   API.get(`/tour/search?searchQuery=${searchQuery}`);
@@ -42,3 +43,6 @@ export const getToursBySearch = (searchQuery) =>
 export const getTagTours = (tag) => API.get(`/tour/tag/${tag}`);
 export const getRelatedTours = (tags) => API.post(`/tour/relatedTours`, tags);
 export const likeTour = (id) => API.patch(`/tour/like/${id}`);
+export const addToShoping = (id) => API.patch(`/tour/addToShoping/${id}`);
+
+export const getManyTours = (tours) => API.post(`/tour/shopping/getMany`, tours);

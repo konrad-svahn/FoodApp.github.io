@@ -27,6 +27,18 @@ export const getTours = createAsyncThunk(
   }
 );
 
+export const getManyTours = createAsyncThunk(
+  "tour/getManyTours",
+  async (tours, { rejectWithValue }) => {
+    try {
+      const response = await api.getManyTours(tours);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 export const getTour = createAsyncThunk(
   "tour/getTour",
   async (id, { rejectWithValue }) => {
@@ -44,6 +56,18 @@ export const likeTour = createAsyncThunk(
   async ({ _id }, { rejectWithValue }) => {
     try {
       const response = await api.likeTour(_id);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const getLikedTours = createAsyncThunk(
+  "tour/getLikedTours",
+  async (userId, { rejectWithValue }) => {
+    try {
+      const response = await api.getLikedTours(userId);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -134,7 +158,10 @@ const tourSlice = createSlice({
     userTours: [],
     tagTours: [],
     relatedTours: [],
+    ingredients: [],
+    sortBy: "all",
     currentPage: 1,
+    scrollPos: 0,
     numberOfPages: null,
     error: "",
     loading: false,
@@ -143,6 +170,15 @@ const tourSlice = createSlice({
     setCurrentPage: (state, action) => {
       state.currentPage = action.payload;
     },
+    setScrollPos: (state, action) => {
+      state.scrollPos = action.payload;
+    },
+    setSortBy: (state, action) => {
+      state.sortBy = action.payload;
+    },
+    setShoppingList: (state, action) => {
+      state.shoppingList = action.payload
+    }
   },
   extraReducers: {
     [createTour.pending]: (state, action) => {
@@ -161,11 +197,25 @@ const tourSlice = createSlice({
     },
     [getTours.fulfilled]: (state, action) => {
       state.loading = false;
-      state.tours = action.payload.data;
+      if(state.currentPage == 1){
+        state.tours = action.payload.data
+      } else if (state.currentPage <= state.numberOfPages) {
+        state.tours = state.tours.concat(action.payload.data);
+      }
       state.numberOfPages = action.payload.numberOfPages;
-      state.currentPage = action.payload.currentPage;
     },
     [getTours.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+    [getLikedTours.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [getLikedTours.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.tours = action.payload.data
+    },
+    [getLikedTours.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload.message;
     },
@@ -239,6 +289,7 @@ const tourSlice = createSlice({
         state.tours = state.tours.map((item) =>
           item._id === _id ? action.payload : item
         );
+        state.tour = action.payload
       }
     },
     [likeTour.rejected]: (state, action) => {
@@ -278,9 +329,20 @@ const tourSlice = createSlice({
       state.loading = false;
       state.error = action.payload.message;
     },
+    [getManyTours.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [getManyTours.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.tours = action.payload
+    },
+    [getManyTours.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
   },
 });
 
-export const { setCurrentPage } = tourSlice.actions;
+export const { setCurrentPage, setScrollPos, setSortBy} = tourSlice.actions;
 
 export default tourSlice.reducer;

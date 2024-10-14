@@ -10,13 +10,8 @@ code {
     monospace;
 }
 
-.desc {
-  position: relative;
-  top: -45px;
-}
-
 .header-text {
-  color: #606080;
+  color: #ffffff;
   font-weight: 500;
   margin-top: 17px;
   font-size: 17px;
@@ -26,8 +21,9 @@ code {
   position: relative;
   color: #000000;
   font-weight: 700;
+  font-size: 17px;
   margin-top: 17px;
-  top: -37px;
+  top: -32px;
 }
 
 .top-left {
@@ -41,8 +37,7 @@ code {
 
 .tag-card {
   position: relative;
-  top: -50px;
-  left: -1px;
+  top: -40px;
   color: #806a78;
 }
 
@@ -61,7 +56,7 @@ code {
 }
  .user{
   position: relative;
-  top: -48px;
+  top: -40px;
  }
 
 h4 {

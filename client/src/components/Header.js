@@ -47,11 +47,11 @@ const Header = () => {
   };
 
   return (
-    <MDBNavbar fixed="top" expand="lg" style={{ backgroundColor: "#f0e6ea" }}>
+    <MDBNavbar fixed="top" expand="lg" style={{ backgroundColor: "#606080" }}>
       <MDBContainer style={{width: "980px"}}>
         <MDBNavbarBrand
           href="/"
-          style={{ color: "#606080", fontWeight: "600", fontSize: "22px"}}
+          style={{ color: "#f0e6ea", fontWeight: "600", fontSize: "22px"}}
         >
           FamNam
         </MDBNavbarBrand>
@@ -60,14 +60,14 @@ const Header = () => {
           aria-expanded="false"
           aria-label="Toogle navigation"
           onClick={() => setShow(!show)}
-          style={{ color: "#606080" }}
+          style={{ color: "#ffffff" }}
         >
           <MDBIcon icon="bars" fas />
         </MDBNavbarToggler>
         <MDBCollapse show={show} navbar>
           <MDBNavbarNav right fullWidth={false} className="mb-2 mb-lg-0">
             {user?.result?._id && (
-              <h5 style={{ marginRight: "30px", marginTop: "27px" }}>
+              <h5 style={{ marginRight: "30px", marginTop: "27px", color: "#ffffff"}}>
                 Logged in as: {user?.result?.name}
               </h5>
             )}
@@ -85,7 +85,7 @@ const Header = () => {
                 </MDBNavbarItem>
                 <MDBNavbarItem>
                   <MDBNavbarLink href="/dashboard">
-                    <p className="header-text">Dashboard</p>
+                    <p className="header-text">My Recipies</p>
                   </MDBNavbarLink>
                 </MDBNavbarItem>
               </>
@@ -114,7 +114,7 @@ const Header = () => {
                 onChange={(e) => setSearch(e.target.value)}
               />
               <div style={{ marginTop: "5px", marginLeft: "5px" }}>
-                <MDBIcon fas icon="search" />
+                <MDBIcon style={{ color: "#ffffff", marginLeft: "5px"}} fas icon="search" />
               </div>
            </form>
           </MDBNavbarNav>

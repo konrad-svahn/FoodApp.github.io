@@ -12,6 +12,8 @@ import { setUser } from "./redux/features/authSlice";
 import AddEditTour from "./pages/AddEditTour";
 import SingleTour from "./pages/SingleTour";
 import Dashboard from "./pages/Dashboard";
+import LikedPosts from "./pages/LikedPosts";
+import Shopping from "./pages/Shopping";
 import PrivateRoute from "./components/PrivateRoute";
 import NotFound from "./pages/NotFound";
 import TagTours from "./pages/TagTours";
@@ -32,6 +34,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/tours/search" element={<Home />} />
+          <Route path="/likedPosts" element={<LikedPosts />} />
+          <Route path="/shopping" element={<Shopping />} />
           <Route path="/tours/tag/:tag" element={<TagTours />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

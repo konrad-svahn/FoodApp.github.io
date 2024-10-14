@@ -23,27 +23,30 @@ const RelatedTours = ({ relatedTours, tourId }) => {
               .splice(0, 3)
               .map((item) => (
                 <MDBCol>
-                  <MDBCard>
+                  <MDBCard style={{height: "370px"}}>
                     <Link to={`/tour/${item._id}`}>
-                      <MDBCardImage
-                        src={item.imageFile}
-                        alt={item.title}
-                        position="top"
-                      />
-                    </Link>
-                    <span className="text-start tag-card">
-                      {item.tags.map((tag) => (
-                        <Link to={`/tours/tag${tag}`}> #{tag}</Link>
-                      ))}
-                    </span>
-                    <MDBCardBody>
-                      <MDBCardTitle className="text-start">
-                        {item.title}
-                      </MDBCardTitle>
-                      <MDBCardText className="text-start">
-                        {excerpt(item.description, 45)}
-                      </MDBCardText>
-                    </MDBCardBody>
+                      <div style={{height: "370px"}}>
+                        <MDBCardImage
+                          src={item.imageFile}
+                          alt=" "
+                          position="top"
+                          style={{ maxWidth: "100%", height: "230px" }}
+                        />
+                        <span className="text-start tag-card" style={{position: "relative", top: "4px"}}>
+                          {item.tags.map((tag) => (
+                            <Link to={`/tours/tag/${tag}`}> #{tag}</Link>
+                          ))}
+                        </span>
+                        <MDBCardBody>
+                          <MDBCardTitle className="text-start">
+                            {item.title}
+                          </MDBCardTitle>
+                          <MDBCardText className="text-start">
+                            {excerpt(item.description, item.imageFile === undefined ? 404:60)}
+                          </MDBCardText>
+                        </MDBCardBody>
+                      </div>
+                    </Link>  
                   </MDBCard>
                 </MDBCol>
               ))}

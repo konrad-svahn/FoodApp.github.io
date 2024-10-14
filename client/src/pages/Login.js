@@ -42,10 +42,7 @@ const Login = () => {
     setFormValue({ ...formValue, [name]: value });
   };
 
-
   const devEnv = process.env.NODE_ENV !== "production";
-
-  
 
   const googleSuccess = (resp) => {
     const email = resp?.profileObj?.email;

@@ -12,7 +12,8 @@ import {
 } from "mdb-react-ui-kit";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { likeTour } from "../redux/features/tourSlice";
+import { likeTour ,deleteTour} from "../redux/features/tourSlice";
+import { toast } from "react-toastify";
 
 const CardTour = ({
   imageFile,
@@ -27,11 +28,18 @@ const CardTour = ({
   const userId = user?.result?._id || user?.result?.googleId;
 
   const dispatch = useDispatch();
-  const excerpt = (str) => {
-    if (str.length > 45) {
-      str = str.substring(0, 45) + " ...";
+  const excerpt = (str, num) => {
+
+    if (str.length > num) {
+      str = str.substring(0, num) + " ...";
     }
     return str;
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this tour ?")) {
+      dispatch(deleteTour({ id, toast }));
+    }
   };
 
   const Likes = () => {
@@ -55,7 +63,7 @@ const CardTour = ({
         <>
           <MDBIcon far icon="thumbs-up" />
           &nbsp;{likes.length} 
-        </>//{likes.length === 1 ? "Like" : "Likes"}
+        </>
       );
     }
     return (
@@ -75,9 +83,10 @@ const CardTour = ({
 
         <div className="text-start" style={{ height: "0px"}}>
           <MDBBtn
-            style={{ float: "right"}}
+            className="border border-secondary"
+            style={{  position: "relative", float: "right", width:"105px", color: "#606080", top:"7px", right:"5px"}}
             tag="a"
-            //color="none"
+            color="light"
             onClick={!user?.result ? null : handleLike}
           >
             {!user?.result ? (
@@ -88,6 +97,34 @@ const CardTour = ({
               <Likes />
             )}
           </MDBBtn>
+          
+          <div style={{ 
+            visibility: window.location.pathname === "/dashboard" ? "visible":"hidden", 
+            height: "0px",
+            position:"relative",
+            top: imageFile !== undefined ? "240px":"62px", 
+            right: "-230px"}}
+          >
+            <MDBBtn className="mt-1" tag="a" color="none">
+              <MDBIcon
+                fas
+                icon="trash"
+                style={{ color: "#dd4b39" }}
+                size="lg"
+                onClick={() => handleDelete(_id)}
+              />
+            </MDBBtn>
+            <Link to={`/editTour/${_id}`}>
+              <MDBBtn tag="a" color="none">
+                <MDBIcon
+                  fas
+                  icon="edit"
+                  style={{ color: "#55acee", marginLeft: "10px" }}
+                  size="lg"
+                />
+              </MDBBtn>
+            </Link>
+          </div>
         </div>
 
         <Link to={`/tour/${_id}`}>
@@ -95,21 +132,22 @@ const CardTour = ({
           <MDBCardImage
             className="rounded-top-5"
             src={imageFile}
-            alt={title}
+            alt=" "
             position="top"
             style={{ maxWidth: "100%", height: "230px" }}
           />
       
           <MDBCardBody>
-            <MDBCardTitle className="text-start res-name">{title}</MDBCardTitle>
+          <div style={{height: imageFile === undefined ? "15px":"5px"}}></div>
+            <MDBCardTitle style={{width:imageFile === undefined ? "190px":"200px", height:"40px"}} className="text-start res-name">{excerpt(title, 40)}</MDBCardTitle>
             <MDBCardText className="text-start">
-              <div className="text-start user"> by {name}</div>
-              <div className="text-start tag-card">
-                {tags.map((tag) => (
+              <div style={{width:"200px"}} className="text-start user"> by {name}</div>
+              <div style={{width:"200px"}} className="text-start tag-card">
+                {tags.slice(0, 2).map((tag) => (
                   <Link to={`/tours/tag/${tag}`}> #{tag}</Link>
                 ))}
               </div>
-              <div className="desc">{excerpt(description)}</div>
+              <div style={{position: "relative", top: "-40px", height:"15px"}}>{excerpt(description,imageFile === undefined ? 404:60)}</div>
             </MDBCardText>
           </MDBCardBody>
           </div>

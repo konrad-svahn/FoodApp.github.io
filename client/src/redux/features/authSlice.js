@@ -44,6 +44,18 @@ export const googleSignIn = createAsyncThunk(
   }
 );
 
+export const addToShoping = createAsyncThunk(
+  "tour/addToShoping",
+  async ({ id }, { rejectWithValue }) => {
+    try {
+      const response = await api.addToShoping(id);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -95,6 +107,14 @@ const authSlice = createSlice({
     },
     [googleSignIn.rejected]: (state, action) => {
       state.loading = false;
+      state.error = action.payload.message;
+    },
+    [addToShoping.pending]: (state, action) => {},
+    [addToShoping.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.user.result.shoppingList = action.payload.updatedUser.shoppingList
+    },
+    [addToShoping.rejected]: (state, action) => {
       state.error = action.payload.message;
     },
   },

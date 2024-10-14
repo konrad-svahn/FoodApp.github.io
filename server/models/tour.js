@@ -4,6 +4,7 @@ const tourSchema = mongoose.Schema({
   title: String,
   description: String,
   name: String,
+  time: String,
   creator: String,
   tags: [String],
   imageFile: String,
@@ -15,6 +16,13 @@ const tourSchema = mongoose.Schema({
     type: [String],
     default: [],
   },
+  ingerdients:[
+    {
+      ingredient: String,
+      amount: Number,
+      unit: String 
+    }
+  ]
 });
 
 const TourModal = mongoose.model("Tour", tourSchema);

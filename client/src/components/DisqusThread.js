@@ -37,7 +37,7 @@ class DisqusThread extends React.Component {
 
   render() {
     let { id, title, path, ...other } = this.props;
-    console.log("this.props", this.props);
+    //console.log("this.props", this.props);
 
     if (process.env.BROWSER) {
       window.disqus_shortname = process.env.REACT_APP_SHORTNAME;

@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { MDBCol, MDBContainer, MDBRow, MDBTypography } from "mdb-react-ui-kit";
 import { useDispatch, useSelector } from "react-redux";
-import { getTours, setCurrentPage, setScrollPos} from "../redux/features/tourSlice";
+import { getLikedTours } from "../redux/features/tourSlice";
 import CardTour from "../components/CardTour";
 import Spinner from "../components/Spinner";
+import { useNavigate } from 'react-router-dom'
 import Sorter from "../components/Sorter";
 import { useLocation } from "react-router-dom";
 
@@ -12,40 +13,31 @@ function useQuery() {
 }
  
 const Home = () => {
-  const { tours, loading, currentPage, numberOfPages, scrollPos, sortBy} = useSelector(
+  const { user } = useSelector((state) => ({ ...state.auth }));
+  const userId = user?.result?._id;
+  const { tours, loading, curentPage} = useSelector(
     (state) => ({
       ...state.tour,
     })
   );
+  const navigate =  useNavigate()
   const dispatch = useDispatch();
   const query = useQuery();
   const searchQuery = query.get("searchQuery");
   const location = useLocation()
-  
-  const onBottom = () => {
-    if (
-      Math.abs(document.documentElement.scrollHeight - document.documentElement.scrollTop - document.documentElement.clientHeight) < 1 &&
-      currentPage < numberOfPages && 
-      window.scrollY != 0
-    ) {
-      dispatch(setScrollPos(window.scrollY))
-      dispatch(setCurrentPage(currentPage + 1))
-    }
-  }
 
   useEffect(() => {
-    if (loading == false) {
-      if (scrollPos) window.scrollTo(0, scrollPos);
+    console.log(user)
+    if (userId){
+        dispatch(getLikedTours(userId));
+    } else {
+        navigate("/")
     }
-  }, [loading]);
-
-  useEffect(() => {
-    dispatch(getTours(currentPage));
-  }, [currentPage]);
+  }, [curentPage]);
 
   if (loading) {
     return <Spinner />;
-  } 
+  }
 
   return (
     <>
@@ -58,17 +50,15 @@ const Home = () => {
           alignContent: "center",
         }}
       >
-        {window.onscroll = function() {onBottom()}}
         <Sorter></Sorter>
-
         <MDBRow className="mt-5">
-          {tours.length === 0 && location.pathname === "/" && (
+          {tours.length === 0 && location.pathname === "/LikedPosts" && (
             <MDBTypography className="text-center mb-0" tag="h2">
               No Tours Found
             </MDBTypography>
           )}
 
-          {tours.length === 0 && location.pathname !== "/" && (
+          {tours.length === 0 && location.pathname !== "/LikedPosts" && (
             <MDBTypography className="text-center mb-0" tag="h2">
               We couldn't find any matches for "{searchQuery}"
             </MDBTypography>
