@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import AuthReducer from "/Users/kajalhamedi/Documents/FoodApp/client/src/redux/features/authSlice";
-import TourReducer from "/Users/kajalhamedi/Documents/FoodApp/client/src/redux/features/tourSlice";
+import AuthReducer from "./features/authSlice";
+import TourReducer from "./features/tourSlice";
 
 export default configureStore({
   reducer: {

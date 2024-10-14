@@ -10,7 +10,7 @@ export const login = createAsyncThunk(
       navigate("/");
       return response.data;
     } catch (err) {
-      console.log("ERROORRRR");
+      console.log("EROR");
       return rejectWithValue(err.response.data);
     }
   }

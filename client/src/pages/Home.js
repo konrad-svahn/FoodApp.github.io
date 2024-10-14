@@ -10,7 +10,7 @@ import { useLocation } from "react-router-dom";
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
-
+ 
 const Home = () => {
   const { tours, loading, currentPage, numberOfPages } = useSelector(
     (state) => ({
@@ -21,6 +21,16 @@ const Home = () => {
   const query = useQuery();
   const searchQuery = query.get("searchQuery");
   const location = useLocation();
+
+  const onBottom = () => {
+    if (
+      Math.abs(document.documentElement.scrollHeight - document.documentElement.scrollTop - document.documentElement.clientHeight) < 1
+    ) {
+      console.log(tours)
+      //dispatch(setCurrentPage(currentPage + 1))
+    }
+  }
+
 
   useEffect(() => {
     dispatch(getTours(currentPage));
@@ -39,6 +49,7 @@ const Home = () => {
         alignContent: "center",
       }}
     >
+    {window.onscroll = function() {onBottom()}}
       <MDBRow className="mt-5">
         {tours.length === 0 && location.pathname === "/" && (
           <MDBTypography className="text-center mb-0" tag="h2">

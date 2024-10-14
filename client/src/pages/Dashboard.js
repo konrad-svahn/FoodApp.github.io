@@ -66,7 +66,11 @@ const Dashboard = () => {
           <hr style={{ maxWidth: "570px" }} />
         </>
       )}
-
+      <Link to={`/addTour`}>
+        <MDBCard style={{ maxWidth: "600px" }} className="mt-2" >
+          add recipe 
+        </MDBCard>
+      </Link>
       {userTours &&
         userTours.map((item) => (
           <MDBCardGroup key={item._id}>

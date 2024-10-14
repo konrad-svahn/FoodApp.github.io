@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -23,6 +23,7 @@ function App() {
     dispatch(setUser(user));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <BrowserRouter>
       <div className="App">

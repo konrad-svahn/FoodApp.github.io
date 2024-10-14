@@ -45,23 +45,22 @@ const CardTour = ({
               tag="a"
               title={`You and ${likes.length - 1} other people likes`}
             >
-              {likes.length} Likes
+              {likes.length}
             </MDBTooltip>
           ) : (
-            `${likes.length} Like${likes.length > 1 ? "s" : ""}`
+            `${likes.length}`
           )}
         </>
       ) : (
         <>
           <MDBIcon far icon="thumbs-up" />
-          &nbsp;{likes.length} {likes.length === 1 ? "Like" : "Likes"}
-        </>
+          &nbsp;{likes.length} 
+        </>//{likes.length === 1 ? "Like" : "Likes"}
       );
     }
     return (
       <>
         <MDBIcon far icon="thumbs-up" />
-        &nbsp;Like
       </>
     );
   };
@@ -71,23 +70,14 @@ const CardTour = ({
   };
 
   return (
-    <MDBCardGroup>
-      <MDBCard className="h-100 mt-2 d-sm-flex" style={{ maxWidth: "20rem" }}>
-        <MDBCardImage
-          src={imageFile}
-          alt={title}
-          position="top"
-          style={{ maxWidth: "100%", height: "180px" }}
-        />
-        <div className="top-left">{name}</div>
-        <span className="text-start tag-card">
-          {tags.map((tag) => (
-            <Link to={`/tours/tag/${tag}`}> #{tag}</Link>
-          ))}
+    <MDBCardGroup style={{height: "370px"}}>
+      <MDBCard className="h-100 mt-2 d-sm-flex rounded-5" style={{ maxWidth: "20rem"}} href={`/tour/${_id}`}>
+
+        <div className="text-start" style={{ height: "0px"}}>
           <MDBBtn
-            style={{ float: "right" }}
+            style={{ float: "right"}}
             tag="a"
-            color="none"
+            //color="none"
             onClick={!user?.result ? null : handleLike}
           >
             {!user?.result ? (
@@ -98,14 +88,32 @@ const CardTour = ({
               <Likes />
             )}
           </MDBBtn>
-        </span>
-        <MDBCardBody>
-          <MDBCardTitle className="text-start">{title}</MDBCardTitle>
-          <MDBCardText className="text-start">
-            {excerpt(description)}
-            <Link to={`/tour/${_id}`}>Read More</Link>
-          </MDBCardText>
-        </MDBCardBody>
+        </div>
+
+        <Link to={`/tour/${_id}`}>
+          <div style={{height: "370px"}}>
+          <MDBCardImage
+            className="rounded-top-5"
+            src={imageFile}
+            alt={title}
+            position="top"
+            style={{ maxWidth: "100%", height: "230px" }}
+          />
+      
+          <MDBCardBody>
+            <MDBCardTitle className="text-start res-name">{title}</MDBCardTitle>
+            <MDBCardText className="text-start">
+              <div className="text-start user"> by {name}</div>
+              <div className="text-start tag-card">
+                {tags.map((tag) => (
+                  <Link to={`/tours/tag/${tag}`}> #{tag}</Link>
+                ))}
+              </div>
+              <div className="desc">{excerpt(description)}</div>
+            </MDBCardText>
+          </MDBCardBody>
+          </div>
+        </Link>
       </MDBCard>
     </MDBCardGroup>
   );
