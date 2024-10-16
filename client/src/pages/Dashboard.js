@@ -59,6 +59,8 @@ const Dashboard = () => {
               <MDBRow className="row-cols-1 row-cols-md-3 g-2">
               <Link to={`/addTour`}>
                 <MDBCard style={{ maxWidth: "600px", height: "370px"}} className="mt-2" >
+                  <i class="fas fa-plus fa-9x" style={{position: "relative", top: "100px", color: "#000000"}}></i>
+                  <div style={{ height:"120px" }}></div>
                   add recipe 
                 </MDBCard>
               </Link>
