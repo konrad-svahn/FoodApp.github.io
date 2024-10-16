@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect } from "react";
 import {
   MDBCard,
   MDBCardBody,
-  MDBCardText,
+  MDBTypography,
   MDBContainer,
   MDBIcon,
   MDBBtn,
@@ -93,14 +93,37 @@ const Shopping = () => {
         <>
         <div style={{ height: "100px" }} ></div>
         <MDBContainer>
-            <MDBCard className="mb-3 mt-2" style={{ backgroundColor: "rgb(240, 230, 234, 0.8)" }}>
+            <MDBTypography className="text-center mb-0" tag="h2" hidden={!tours.length == 0 ? true:false}>
+                No Recipes In List
+            </MDBTypography>
+            <MDBCard className="mb-3 mt-2 border-0" style={{ backgroundColor: "rgb(240, 230, 234, 0.8)" }}>
             <MDBCardBody style={{ minHeight: "770px" }}>                    
                 <MDBRow className="row-cols-1 row-cols-md-2 g-2">
                     <MDBCol>
+                        <MDBCard style={{ backgroundColor: "rgb(255, 255, 255, 0)", marginTop:"8px", minHeight:"77vh", height: "98%"}} hidden={tours.length == 0 ? true:false}> 
+                            <div class="text-start" style={{paddingLeft:"12px", paddingRight:"90px", paddingBottom:"8px", paddingTop:"14px", fontWeight:"bold", fontSize:"20px"}}>
+                                All ingerdients
+                            </div>
+                            <ul class="list-group list-group-small border-0" style={{position:"relative", paddingBottom:"20px", left:"12px"}}>
+                                {tours && getIngredientList().map((item) => 
+                                <li class="list-group-item text-start border-0"  style={{height:"25px", color: "#000000", backgroundColor: "rgb(255, 255, 255, 0)" }}>
+                                    <div class="flex-container" style={{display: "flex"}}>
+                                        <div style={{ paddingRight: "4px" }}> {item[0] + ": "} </div>
+                                        <div hidden={item[1].none < 1 ? true:false} style={{ paddingRight: "15px" }}> {item[1].none + ""}</div>
+                                        <div hidden={item[1].l < 1 ? true:false} style={{ paddingRight: "15px" }}> {item[1].l + "l"}</div>
+                                        <div hidden={item[1].dl < 1 ? true:false} style={{ paddingRight: "15px" }}> {item[1].dl + "dl"}</div>
+                                        <div hidden={item[1].ml < 1 ? true:false} style={{ paddingRight: "15px" }}> {item[1].ml + "ml"}</div>
+                                        <div hidden={item[1].g < 1 ? true:false} style={{ paddingRight: "15px" }}> {item[1].g + "g"}</div>
+                                    </div>
+                                </li>)}
+                            </ul>
+                        </MDBCard>
+                    </MDBCol>
+                    <MDBCol>
                         <ul class="list-group list-group-small border-0">
                             {tours && tours.map((item) => 
-                            <li class="list-group-item border-0"  style={{height:"150px", backgroundColor: "rgb(255, 255, 255, 0)", marginBottom:"10px"}}>
-                                <MDBCard  style={{height:"150px", backgroundColor: "rgb(255, 255, 255, 0)"}}>
+                            <li class="list-group-item border-0"  style={{ backgroundColor: "rgb(255, 255, 255, 0)", marginBottom:"10px"}}>
+                                <MDBCard  style={{ backgroundColor: "rgb(255, 255, 255, 0)"}}>
                                     <div style={{height:"10px"}}>
                                         <MDBBtn
                                             className="border border-secondary"
@@ -113,32 +136,21 @@ const Shopping = () => {
                                             <i class="fas fa-minus" style={{position: "relative", top:"-8px", left:"-5px"}}></i>
                                         </MDBBtn>
                                     </div>
-                                    <div class="text-start" style={{paddingLeft:"8px", paddingRight:"90px", paddingBottom:"8px"}}>{item.title.substring(0, 114)}</div>
-                                    <div class="text-start" style={{padding:"8px"}}>
-                                        {item.ingerdients.map((ingredient) => ingredient.ingredient+" "+ingredient.amount+" "+ingredient.unit+" ")}
+                                    <div class="text-start" style={{paddingLeft:"12px", paddingRight:"90px", paddingBottom:"8px", paddingTop:"4px", fontWeight:"bold", fontSize:"20px"}}>
+                                        {item.title.substring(0, 114)}
+                                    </div>
+                                    <div class="text-start" style={{padding:"8px", paddingBottom:"14px"}}>
+                                        {item.ingerdients.map((ingredient) => 
+                                            <li style={{ position:"relative", left:"18px" }}>
+                                                {ingredient.ingredient+" "+ingredient.amount+" "+ingredient.unit+" "}
+                                            </li>
+                                        )}
                                     </div>
                                 </MDBCard>
                             </li>)}
                         </ul>
                     </MDBCol>
-                    <MDBCol>
-                        <ul class="list-group list-group-small border-0">
-                            {tours && getIngredientList().map((item) => 
-                            <li class="list-group-item text-start border-0"  style={{height:"40px", color: "#000000", backgroundColor: "rgb(255, 255, 255, 0)" }}>
-                                <div class="flex-container" style={{display: "flex"}}>
-                                    <div style={{ paddingRight: "4px" }}> {item[0] + ": "} </div>
-                                    <div hidden={item[1].none < 1 ? true:false} style={{ paddingRight: "15px" }}> {item[1].none + ""}</div>
-                                    <div hidden={item[1].l < 1 ? true:false} style={{ paddingRight: "15px" }}> {item[1].l + "l"}</div>
-                                    <div hidden={item[1].dl < 1 ? true:false} style={{ paddingRight: "15px" }}> {item[1].dl + "dl"}</div>
-                                    <div hidden={item[1].ml < 1 ? true:false} style={{ paddingRight: "15px" }}> {item[1].ml + "ml"}</div>
-                                    <div hidden={item[1].g < 1 ? true:false} style={{ paddingRight: "15px" }}> {item[1].g + "g"}</div>
-                                </div>
-                            </li>)}
-                        </ul>
-                    </MDBCol>
                 </MDBRow>
-
-
             </MDBCardBody> 
             </MDBCard>
         </MDBContainer>
