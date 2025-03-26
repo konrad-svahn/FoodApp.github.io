@@ -23,8 +23,6 @@ app.get("/", (req, res) => {
   res.send("Welcome to tour API");
 });
 
-
-
 const port = 5001;
 
 mongoose.connect(MONGODB_URL)
